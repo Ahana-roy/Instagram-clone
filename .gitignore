@@ -5,7 +5,7 @@
 __pycache__
 db.sqlite3
 media
-ig_prj/settings.py
+
 # Backup files # 
 *.bak 
 
@@ -98,6 +98,8 @@ venv.bak/
 # mypy 
 .mypy_cache/ 
 
+
+ig_prj/settings.py
 
 .vscode/* 
 .vscode/settings.json 
