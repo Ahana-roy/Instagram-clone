@@ -5,7 +5,7 @@
 __pycache__
 db.sqlite3
 media
-portfolio/settings.py
+ig_prj/settings.py
 # Backup files # 
 *.bak 
 
