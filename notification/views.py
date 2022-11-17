@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from notification.models import Notification
 
-def ShowNotification(request):
+def ShowAllNotification(request):
     user = request.user
    
-    notifications = Notification.objects.filter(user=user)
+    notifications = Notification.objects.filter(user=user, archive__in=[0,1])
+    
 
     context = {
         'notifications': notifications,
@@ -23,15 +24,22 @@ def ShowNotification(request):
 
 
 
-def ArchiveNotifications(request, archive_id):
+def ArchiveNotifications(request, noti_id):
     user = request.user
 
-    print(archive_id)
-    if archive_id == '2':
-        Notification.objects.filter(archive = archive_id, user = user).delete()
-        return redirect('show-notification')
+    print(noti_id)
+    
+    
+    try:
+        change = Notification.objects.get(id=noti_id)
+        change.archive = 1
+        change.save()
+    except:
+        raise(Exception)
+        
+        
+    return redirect('show-notification')
 
-   
 
     
 

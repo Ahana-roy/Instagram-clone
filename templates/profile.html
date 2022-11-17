@@ -34,7 +34,7 @@
 
                     <img src="{{profile.image.url}}" alt="" style="width: 200px; height: 200px;">
 
-                </div> 
+                </div>
 
                 <div class="profile-user-settings">
                         {% if profile.first_name %}
@@ -62,26 +62,20 @@
                                 <a href="{% url 'conversation' profile.user  %}" class="btn profile-edit-btn">Message</a> <br><br>
                         {% endif %}
                         <br>
-
-                    
-                    
-                    
-                    
+           
 
                 </div>
-
-                
 
                 <div class="profile-bio">
                     <br>
                     {% if profile.bio %}
-                    <p><span class="profile-real-name"></span> {{profile.bio}}</p>
+                    <p><span class="profile-real-name"></span>◉ {{profile.bio}}</p>
                     {% endif %}
                     {% if profile.location %}
-                    <p><span class="profile-real-name"></span> {{profile.location}}</p>
+                    <p><span class="profile-real-name"></span>◉ {{profile.location}}</p>
                     {% endif %}
                     {% if profile.url %}
-                    <p><span class="profile-real-name"></span> <a href="{{profile.url}}">{{profile.url}}</a></p>
+                    <p><span class="profile-real-name"></span>◉ <a href="{{profile.url}}">{{profile.url}}</a></p>
                     {% endif %}
                     <br><br>
                     <div class="profile-user-settings">
@@ -119,13 +113,24 @@
             <div class="gallery">
                 
                 {% for post in posts %}
-                <div class="gallery-item" tabindex="0">
+                <a href="{{post.get_absolute_url}}"><div class="gallery-item" tabindex="0">
 
                     <img src="{{ post.picture.url }}" class="gallery-image" alt="" style="width: 500px; height: 300px; object-fit: cover;">
 
-               </div> 
-              
+                    <div class="gallery-item-info">
+
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likes}}</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{post.comment.count}}</li>
+                        </ul>
+
+                    </div>
+
+                </div></a>
                 {% endfor %}
+
+                
+
                 
 
             </div>

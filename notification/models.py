@@ -12,7 +12,13 @@ class Notification(models.Model):
     text_preview = models.CharField(max_length=100, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
-    archive = models.BigIntegerField(null=True, blank=True)
+
+    # 0--> recent unseen notifications, 1-->hidden notifications, 2-->delete notifications
+
+    archive = models.SmallIntegerField(null=True, blank=True, default=0)
+
+
+
 
     # def __str__(self):
     #     return self.text_preview

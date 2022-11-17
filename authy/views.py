@@ -22,10 +22,10 @@ def UserProfile(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
     url_name = resolve(request.path).url_name
-    posts = Post.objects.filter(user=user).order_by('-posted')
+    posts = Post.objects.filter(user=user)
 
     if url_name == 'profile':
-        posts = Post.objects.filter(user=user).order_by('-posted')
+        posts = Post.objects.filter(user=user)
     else:
         posts = profile.favourite.all()
     
@@ -58,8 +58,11 @@ def EditProfile(request):
     profile = Profile.objects.get(user__id=user)
 
     if request.method == "POST":
+        
         form = EditProfileForm(request.POST, request.FILES, instance=request.user.profile)
+       
         if form.is_valid():
+            
             profile.image = form.cleaned_data.get('image')
             profile.first_name = form.cleaned_data.get('first_name')
             profile.last_name = form.cleaned_data.get('last_name')
@@ -67,6 +70,8 @@ def EditProfile(request):
             profile.url = form.cleaned_data.get('url')
             profile.bio = form.cleaned_data.get('bio')
             profile.save()
+            form.save()
+            
             return redirect('profile', profile.user.username)
     else:
         form = EditProfileForm(instance=request.user.profile)
@@ -80,6 +85,7 @@ def follow(request, username, option):
     user = request.user
     following = get_object_or_404(User, username=username)
 
+    print(following,option)
     try:
         f, created = Follow.objects.get_or_create(follower=request.user, following=following)
 

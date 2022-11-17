@@ -21,10 +21,7 @@
     <div class="container">
       <div class="phone-app-ddemo"></div>
       <div class="form-data">
-        <a href="#showhidden">Show hidden notifications</a>
-
-    
-
+  
         <form action="" method="POST" enctype="multipart/form-data">
           <div class="logo">
             <h3 style="padding-top: 5px; font-size: 20px;">Notifications</h3>
@@ -37,7 +34,7 @@
                 {% if notification.notification_types == 1 %}
                     <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
                         <div class="side-menu__user-profile">
-                            <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar">
+                            <a href="{% url 'profile' notification.sender.username %}" class="side-menu__user-avatar">
                                 {% if notification.sender.profile.image %}
                                     <img src="{{ notification.sender.profile.image.url }}" alt="User Picture">
                                 {% else %}
@@ -45,7 +42,7 @@
                                 {% endif %}
                             </a>
                             <div class="side-menu__user-idnfo" style="text-align: start;">
-                                <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
+                                <a href="{% url 'profile' notification.sender.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
                                 <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-hand-thumbs-up-fill" style="color: blue;"></i> Liked Your Post</b></a> <br>
                                 <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
 
@@ -54,7 +51,18 @@
                                 <img src="{{ notification.post.picture.url }}" alt="User Picture">
                             </a>
                         </div>
-                        <a href="{% url 'archive-notification' notification.archive %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
+                        {% if notification.archive == 0 %}
+                          <a href="{% url 'archive-notification' notification.id  %}" type="button" class="btn-close"></a>
+                        {% elif notification.archive == 1 %}
+                        <span title="This notification is hidden.">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="position: absolute;
+                          top: 15px; right: 15px; cursor: pointer;" class="bi bi-eye-slash-fill" viewBox="0 0 16 16" >
+                            <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                            <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                          </svg>
+                        </span>
+                        {% endif %}
+
                       </div>
                 {% endif %}
                 
@@ -62,7 +70,7 @@
       
                     <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
                         <div class="side-menu__user-profile">
-                            <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar">
+                            <a href="{% url 'profile' notification.sender.username %}" class="side-menu__user-avatar">
                                 {% if notification.sender.profile.image %}
                                     <img src="{{ notification.sender.profile.image.url }}" alt="User Picture">
                                 {% else %}
@@ -70,21 +78,32 @@
                                 {% endif %}
                             </a>
                             <div class="side-menu__user-idnfo" style="text-align: start;">
-                                <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
+                                <a href="{% url 'profile' notification.sender.username %}" style="font-size: 15px; color: black; text-align: center;">{{ notification.sender.profile.first_name|title }} {{ notification.sender.profile.last_name|title }}</a> <br>
                                 <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-user" style="color: blue;"></i> Started Following You</b></a> <br>
                                 <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
                             </div>
                         </div>
-                        <a href="{% url 'archive-notification' notification.archive %}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></a>
-                      </div>
+                        {% if notification.archive == 0 %}
+                          <a href="{% url 'archive-notification' notification.id  %}" type="button" class="btn-close"></a>
+                        {% elif notification.archive == 1 %}
+                        <span title="This notification is hidden.">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="position: absolute;
+                          top: 15px; right: 15px; cursor: pointer;" class="bi bi-eye-slash-fill" viewBox="0 0 16 16" >
+                            <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                            <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                          </svg>
+                        </span>
+                        {% endif %}
+                        </div>
+                     
                 {% endif %}
 
 
                 {% if notification.notification_types == 2 %}
-                <div  class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 5px;">
+                <div  class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
                   <div class="side-menu__user-profile">
 
-                    <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar">
+                    <a href="{% url 'profile' notification.sender.username %}" class="side-menu__user-avatar">
                       {% if notification.sender.profile.image %}
                           <img src="{{ notification.sender.profile.image.url }}" alt="User Picture">
                       {% else %}
@@ -97,18 +116,27 @@
                         <a href="{% url 'profile' user.username %}" style="font-size: 15px; color: black; text-align: center;"><b><i class="bi bi-chat-dots-fill" style="color: rgb(252, 122, 1);"></i> Commented on your post</b></a> <br>
                         <a href="{% url 'profile' user.username %}" style="font-size: 10px; color: rgb(75, 75, 75); ">{{ notification.date }}</a>
                       </div>
-
+                      
                       <a href="{% url 'profile' user.username %}" class="side-menu__user-avatar" style="margin-left: 20px;">
                         <img src="{{ notification.post.picture.url }}" alt="User Picture">
                       </a>
                   </div>
-                  <a href="{% url 'archive-notification' 2 %}" type="button" class="btn-close" ></a>
+                  {% if notification.archive == 0 %}
+                          <a href="{% url 'archive-notification' notification.id  %}" type="button" class="btn-close"></a>
+                  {% elif notification.archive == 1 %}
+                  <span title="This notification is hidden.">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" style="position: absolute;
+                    top: 15px; right: 15px; cursor: pointer;" class="bi bi-eye-slash-fill" viewBox="0 0 16 16" >
+                      <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
+                      <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
+                    </svg>
+                  </span>
+                  {% endif %}
               </div>
+              
                
             {% endif %}
-            
-
-            
+                     
 
             {% endfor %}
 
