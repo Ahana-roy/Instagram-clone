@@ -222,11 +222,15 @@
                                 <span>@{{user.username}}</span>
                             </div>
 
-                            {% if follow_status == True %}
-                            <a href="{% url 'follow' user 0 %}" class="side-menu__suggestion-button">Follow</a>
+                           
+                            {% if user.id in request.session.following %}
+                                <a href="{% url 'follow' user 0 %}" style="color: red; font-size: 10px;">Unfollow</a> <br><br>
                             {% else %}
-                            <a href="{% url 'follow' user 1 %}" class="side-menu__suggestion-button" >Follow</a>
+                                <a href="{% url 'follow' user 1 %}" style="color: green; font-size: 10px;">Follow</a> <br><br>
                             {% endif %}
+                            
+                       
+                          
                         </div>
                         {% endif %}
                         {% endfor %}
@@ -273,10 +277,10 @@
                                     <span>@{{user.username}}</span>
                                 </div>
 
-                                {% if follow_status == True %}
-                                <a href="{% url 'follow' user 1 %}" class="side-menu__suggestion-button">Follow</a>
+                                {% if user.id in request.session.following %}
+                                    <a href="{% url 'follow' user 0 %}" style="color: red; font-size: 10px;">Unfollow</a> <br><br>
                                 {% else %}
-                                <a href="{% url 'follow' user 0 %}" class="side-menu__suggestion-button">Unfollow</a>
+                                    <a href="{% url 'follow' user 1 %}" style="color: green; font-size: 10px;">Follow</a> <br><br>
                                 {% endif %}
                             </div>
                             {% endif %}

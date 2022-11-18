@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 # from post.models import Post
 
 class Notification(models.Model):
+
     NOTIFICATION_TYPES = ((1, 'Like'), (2, 'Comment'), (3, 'Follow'))
 
     post = models.ForeignKey("post.Post", on_delete=models.CASCADE, related_name="notification_post", null=True, blank=True)
@@ -17,6 +18,8 @@ class Notification(models.Model):
 
     archive = models.SmallIntegerField(null=True, blank=True, default=0)
 
+
+    
 
 
 

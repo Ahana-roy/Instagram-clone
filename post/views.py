@@ -11,6 +11,9 @@ from django.urls import resolve
 from comment.models import Comment
 from comment.forms import NewCommentForm
 from django.core.paginator import Paginator
+from django.contrib.sessions.models import Session
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 from django.db.models import Q
 # from post.models import Post, Follow, Stream
@@ -22,16 +25,30 @@ from django.db.models import Q
 def index(request):
     user = request.user
     all_users = User.objects.all()
-    follow_status = Follow.objects.filter(following__in=all_users, follower=user).exists()
+
+    ids = list(Follow.objects.values('following').filter(follower = user))
+    
+    following = []
+    for i in ids:
+        for key,val in i.items():
+            following.append(val)
+
+    
+    request.session['following'] = following
+  
+    follow_status = Follow.objects.filter(following__in = all_users, follower = user).exists()
     print(follow_status)
     profile = Profile.objects.all()
 
+    
     posts = Stream.objects.filter(user=user)
     group_ids = []
 
     
     for post in posts:
         group_ids.append(post.post_id)
+
+
         
     post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')
 
@@ -49,6 +66,7 @@ def index(request):
         'follow_status': follow_status,
         'profile': profile,
         'all_users': all_users,
+        # 'username' : username,
         # 'users_paginator': users_paginator,
     }
     return render(request, 'index.html', context)
