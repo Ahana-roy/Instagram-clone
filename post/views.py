@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 
 from post.models import Post, Tag, Follow, Stream, Likes
 from django.contrib.auth.models import User
@@ -103,6 +104,10 @@ def NewPost(request):
 @login_required
 def PostDetail(request, post_id):
     user = request.user
+    post = Post.objects.get(id=post_id)
+    liked = Likes.objects.filter(user=user, post=post).count()
+    request.session['liked'] = liked
+   
     post = get_object_or_404(Post, id=post_id)
     comments = Comment.objects.filter(post=post).order_by('-date')
 
@@ -141,12 +146,15 @@ def Tags(request, tag_slug):
 # Like function
 @login_required
 def like(request, post_id):
+
+   
     user = request.user
     post = Post.objects.get(id=post_id)
     current_likes = post.likes
     liked = Likes.objects.filter(user=user, post=post).count()
-
-    if not liked:
+    request.session['liked'] = liked
+    
+    if not liked :
         Likes.objects.create(user=user, post=post)
         current_likes = current_likes + 1
     else:
@@ -155,7 +163,8 @@ def like(request, post_id):
         
     post.likes = current_likes
     post.save()
-    # return HttpResponseRedirect(reverse('post-details', args=[post_id]))
+    
+    
     return HttpResponseRedirect(reverse('post-details', args=[post_id]))
 
 @login_required

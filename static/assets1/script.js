@@ -36,31 +36,31 @@ toggleThemeBtn.addEventListener('click', () => {
 // ===================================
 // STORIES SCROLL BUTTONS
 // Scrolling stories content
-storiesLeftButton.addEventListener('click', () => {
-    storiesContent.scrollLeft -= 320;
-});
-storiesRightButton.addEventListener('click', () => {
-    storiesContent.scrollLeft += 320;
-});
+// storiesLeftButton.addEventListener('click', () => {
+//     storiesContent.scrollLeft -= 320;
+// });
+// storiesRightButton.addEventListener('click', () => {
+//     storiesContent.scrollLeft += 320;
+// });
 
 // Checking if screen has minimun size of 1024px
-if(window.matchMedia('(min-width: 1024px)').matches) {
-    // Observer to hide buttons when necessary
-    const storiesObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if(entry.target === document.querySelector('.story:first-child')) {
-                storiesLeftButton.style.display = (entry.isIntersecting) ? 'none' : 'unset';
-            }
-            else if(entry.target === document.querySelector('.story:last-child')) {
-                storiesRightButton.style.display = (entry.isIntersecting) ? 'none' : 'unset';
-            }
-        });
-    }, { root: storiesContent, threshold: 1 });
+// if(window.matchMedia('(min-width: 1024px)').matches) {
+//     // Observer to hide buttons when necessary
+//     const storiesObserver = new IntersectionObserver(function(entries) {
+//         entries.forEach(entry => {
+//             if(entry.target === document.querySelector('.story:first-child')) {
+//                 storiesLeftButton.style.display = (entry.isIntersecting) ? 'none' : 'unset';
+//             }
+//             else if(entry.target === document.querySelector('.story:last-child')) {
+//                 storiesRightButton.style.display = (entry.isIntersecting) ? 'none' : 'unset';
+//             }
+//         });
+//     }, { root: storiesContent, threshold: 1 });
 
-    // Calling the observer with the first and last stories
-    storiesObserver.observe(document.querySelector('.story:first-child'));
-    storiesObserver.observe(document.querySelector('.story:last-child'));
-}
+//     // Calling the observer with the first and last stories
+//     storiesObserver.observe(document.querySelector('.story:first-child'));
+//     storiesObserver.observe(document.querySelector('.story:last-child'));
+// }
 
 // ===================================
 // POST MULTIPLE MEDIAS
@@ -148,3 +148,49 @@ postsContent.forEach(post => {
         }
     }
 });
+
+// var post = {
+//     toggleLikeAction: function(el){
+//         el = jQuery(el);
+        
+//         if(el.length == 0){
+//             return false;
+//         }
+
+//         let likeFlag    = 0;
+//         let postId      = el.data('postId')
+        
+
+//         console.log(postId);
+        
+        
+
+//         if(el.hasClass('bi-heart')){
+//             likeFlag = 1;
+//         }
+
+//         if(likeFlag){
+//             el.removeClass('bi-heart').addClass('bi-heart-fill');
+//         }else{
+//             el.removeClass('bi-heart-fill').addClass('bi-heart');
+//         }
+
+//         // data = {'postId': postId, 'likeFlag': 1}
+//         // let callback = function(r){
+//         //     console.log(r)
+//         // }
+//         // util.serverCall(url,data,callback,'POST');
+//         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+//         $.ajax({
+//             headers: {'X-CSRFToken': csrftoken},
+//             url: postId+'/like',
+//             data: {'likeFlag': likeFlag},
+//             type: 'POST'
+//           }).done(function(response){
+//             console.log(response);
+//           });
+
+        
+//     }
+// }
