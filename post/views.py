@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
 from post.models import Post, Tag, Follow, Stream, Likes
+from comment.models import Comment
 from django.contrib.auth.models import User
 from post.forms import NewPostform
 from authy.models import Profile
@@ -18,9 +19,16 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 from django.db.models import Q
 # from post.models import Post, Follow, Stream
+from django.contrib.sessions.models import Session
 
-
-
+sessions = Session.objects.iterator() 
+for session in sessions: 
+    data = session.get_decoded() 
+    print(data)
+    # data["session_key"] = session.session_key 
+    liked = data.get('liked')
+    
+print(liked)
 
 @login_required
 def index(request):
@@ -34,7 +42,7 @@ def index(request):
         for key,val in i.items():
             following.append(val)
 
-    
+    print('index view',request.session.get('liked'))
     request.session['following'] = following
   
     follow_status = Follow.objects.filter(following__in = all_users, follower = user).exists()
@@ -105,9 +113,6 @@ def NewPost(request):
 def PostDetail(request, post_id):
     user = request.user
     post = Post.objects.get(id=post_id)
-    liked = Likes.objects.filter(user=user, post=post).count()
-    request.session['liked'] = liked
-   
     post = get_object_or_404(Post, id=post_id)
     comments = Comment.objects.filter(post=post).order_by('-date')
 
@@ -153,7 +158,7 @@ def like(request, post_id):
     current_likes = post.likes
     liked = Likes.objects.filter(user=user, post=post).count()
     request.session['liked'] = liked
-    
+    print('likes view',request.session.get('liked'))
     if not liked :
         Likes.objects.create(user=user, post=post)
         current_likes = current_likes + 1
@@ -166,6 +171,7 @@ def like(request, post_id):
     
     
     return HttpResponseRedirect(reverse('post-details', args=[post_id]))
+
 
 @login_required
 def favourite(request, post_id):
@@ -180,3 +186,9 @@ def favourite(request, post_id):
     return HttpResponseRedirect(reverse('post-details', args=[post_id]))
 
 
+# @login_required
+# def comment(request, sender, post_id):
+#     user = sender
+#     post = Post.objects.get(id=post_id)
+#     Comment.objects.filter(user=user, post=post).delete()
+#     return HttpResponseRedirect(reverse('post-details', args=[post_id]))

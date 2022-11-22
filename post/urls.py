@@ -7,6 +7,7 @@ urlpatterns = [
     path('<uuid:post_id>', PostDetail, name='post-details'),
     path('tag/<slug:tag_slug>', Tags, name='tags'),
     path('<uuid:post_id>/like', like, name='like'),
+    # path('<uuid:sender> <uuid:post_id>/comment', comment, name='comment'),
     path('<uuid:post_id>/favourite', favourite, name='favourite'),
 
 ]

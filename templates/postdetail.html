@@ -42,7 +42,7 @@
 </head>
     <main class="main-container">
         <section class="content-container">
-            <div class="contendt">
+            <div class="content">
 
 
                 <div class="posts">
@@ -67,13 +67,13 @@
 
                         <div class="post__content">
                             <div class="post__medias">
-                                <a href="{% url 'post-details' post.id %}"><img class="post__media" src="{{ post.picture.url }}" alt="Post Content" style="width:100%; object-fit: contain;"></a><!--                                <img class="post__media" src="{% static 'assets1/insta-clone.png' %}" alt="Post Content">--><!--                                <img class="post__media" src="{% static 'assets1/insta-clone.png' %}" alt="Post Content">-->
+                                <a href="{% url 'post-details' post.id %}"><img class="post__media" src="{{ post.picture.url }}" alt="Post Content" style="width:100%; object-fit: contain;"></a>                               
                             </div>
                         </div>
 
                         <div class="post__footer">
                             <div class="post__buttons">
-                                {% if request.session.liked == 1 %}
+                                {% if request.session.liked == 0 %}
                                 <a href="{% url 'like' post.id %}" class="post__button">
                                     <i class="bi bi-heart-fill" style="color:red; font-size:20px;"></i>
                                 </a>
@@ -110,7 +110,7 @@
                             
                             <div class="post__infos">
                                 <div class="post__likes">
-                                    <a href="#" class="post__likes-avatar"><!--                                        <img src="assets1/default-user.png" alt="User Picture">-->
+                                    <a href="#" class="post__likes-avatar">
                                     </a>
                                     <span>{{post.likes}} <a class="post__name--underline" href="#">likes</a> <a href="#"></a></span>
                                 </div>
@@ -152,6 +152,9 @@
                                                         <div class="mt-2">
                                                             <p class="comment-text">{{ comment.body }}</p>
                                                         </div>
+                                                        {% comment %} <a href="{% url 'comment' comment.user post.id %}" class="btn btn-danger">
+                                                           DELETE
+                                                        </a>    {% endcomment %}
                                                     </div>
                                                 {% endfor %}
                                                 

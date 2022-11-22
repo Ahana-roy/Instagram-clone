@@ -54,7 +54,9 @@ body {
     overflow-y: auto;
 }
 
-svg { display: block; }
+svg {
+    display: block;
+}
 
 img { max-width: 100%; }
 
@@ -427,6 +429,7 @@ img { max-width: 100%; }
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
+    flex-direction: column;
 }
 .post__medias::-webkit-scrollbar {
     display: none;
