@@ -186,9 +186,3 @@ def favourite(request, post_id):
     return HttpResponseRedirect(reverse('post-details', args=[post_id]))
 
 
-# @login_required
-# def comment(request, sender, post_id):
-#     user = sender
-#     post = Post.objects.get(id=post_id)
-#     Comment.objects.filter(user=user, post=post).delete()
-#     return HttpResponseRedirect(reverse('post-details', args=[post_id]))

@@ -21,12 +21,13 @@ from django.conf.urls.static import static
 # from elements import views as e_views
 # from authusers import views as auth_views
 from authy.views import UserProfile, follow
-
+from adminpanel.views import login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('authy.urls')),
     path('', include('post.urls')),
     path('message/', include('directs.urls')),
+    path('adminpanel/', include('adminpanel.urls')),
     path('notifications/', include('notification.urls')),
 
     # profile
