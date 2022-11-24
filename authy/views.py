@@ -33,13 +33,13 @@ def UserProfile(request, username):
     posts_count = Post.objects.filter(user=user).count()
     following_count = Follow.objects.filter(follower=user).count()
     followers_count = Follow.objects.filter(following=user).count()
-    # count_comment = Comment.objects.filter(post=posts).count()
+   
     follow_status = Follow.objects.filter(following=user, follower=request.user).exists()
 
     # pagination
-    # paginator = Paginator(posts, 8)
-    # page_number = request.GET.get('page')
-    # posts_paginator = paginator.get_page(page_number)
+    paginator = Paginator(posts, 8)
+    page_number = request.GET.get('page')
+    posts_paginator = paginator.get_page(page_number)
 
     context = {
         'posts': posts,
@@ -47,9 +47,9 @@ def UserProfile(request, username):
         'posts_count':posts_count,
         'following_count':following_count,
         'followers_count':followers_count,
-        # 'posts_paginator':posts_paginator,
+        'posts_paginator':posts_paginator,
         'follow_status':follow_status,
-        # 'count_comment':count_comment,
+        
     }
     return render(request, 'profile.html', context)
 

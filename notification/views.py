@@ -6,10 +6,19 @@ def ShowAllNotification(request):
    
     notifications = Notification.objects.filter(user=user, archive__in=[0,1])
     
+    noti_count = Notification.objects.filter(user=user, is_seen = False).count()
 
+    print(noti_count)
+    
+    
+    for i in notifications:
+        i.bgClass = 'bg-light' if(i.is_seen == False) else ''
+        
+        
+    
     context = {
         'notifications': notifications,
-
+        'noti_count' : noti_count,
     }
 
     return render(request, 'notifications/notification.html', context)
@@ -33,6 +42,7 @@ def ArchiveNotifications(request, noti_id):
     try:
         change = Notification.objects.get(id=noti_id)
         change.archive = 1
+        change.is_seen = True
         change.save()
     except:
         raise(Exception)

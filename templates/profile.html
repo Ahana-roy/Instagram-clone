@@ -111,8 +111,9 @@
         <div class="container">
 
             <div class="gallery">
-                
+                {% if follow_status %}
                 {% for post in posts %}
+                
                 <a href="{{post.get_absolute_url}}"><div class="gallery-item" tabindex="0">
 
                     <img src="{{ post.picture.url }}" class="gallery-image" alt="" style="width: 500px; height: 300px; object-fit: fill;">
@@ -126,9 +127,15 @@
 
                     </div>
 
-                </div></a>
-                {% endfor %}
+                </div>
+            </a>
+               
 
+                
+                {% endfor %}
+                {% else %}
+                <p> Follow to view posts </p>
+                {% endif %}
                 
 
                 

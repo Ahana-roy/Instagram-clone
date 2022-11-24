@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 
 from post.models import Post, Tag, Follow, Stream, Likes
+from notification.models import Notification
 from comment.models import Comment
 from django.contrib.auth.models import User
 from post.forms import NewPostform
@@ -12,7 +13,7 @@ from authy.models import Profile
 from django.urls import resolve
 from comment.models import Comment
 from comment.forms import NewCommentForm
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.sessions.models import Session
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -32,21 +33,23 @@ print(liked)
 
 @login_required
 def index(request):
+    
     user = request.user
     all_users = User.objects.all()
-
     ids = list(Follow.objects.values('following').filter(follower = user))
+
     
     following = []
+
     for i in ids:
         for key,val in i.items():
             following.append(val)
 
-    print('index view',request.session.get('liked'))
+   
     request.session['following'] = following
   
     follow_status = Follow.objects.filter(following__in = all_users, follower = user).exists()
-    print(follow_status)
+   
     profile = Profile.objects.all()
 
     
@@ -58,25 +61,21 @@ def index(request):
         group_ids.append(post.post_id)
 
 
-        
+    
     post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')
+    noti_count = Notification.objects.filter(user=user, is_seen = False).count()
 
-    query = request.GET.get('q')
-    if query:
-        users = User.objects.filter(Q(username__icontains=query))
-
-        paginator = Paginator(users, 6)
-        page_number = request.GET.get('page')
-        users_paginator = paginator.get_page(page_number)
-
-
+    print(noti_count)
+    
     context = {
+        
         'post_items': post_items,
         'follow_status': follow_status,
         'profile': profile,
         'all_users': all_users,
+        'noti_count': noti_count
         # 'username' : username,
-        # 'users_paginator': users_paginator,
+        
     }
     return render(request, 'index.html', context)
 

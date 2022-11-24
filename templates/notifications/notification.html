@@ -30,9 +30,10 @@
 
             <!-- First Section -->
             {% for notification in notifications %}
-            
+             
                 {% if notification.notification_types == 1 %}
-                    <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
+                
+                    <div class="alert alert-white alert-dismissible fade show {{ notification.bgClass }}" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
                         <div class="side-menu__user-profile">
                             <a href="{% url 'profile' notification.sender.username %}" class="side-menu__user-avatar">
                                 {% if notification.sender.profile.image %}
@@ -68,7 +69,7 @@
                 
                 {% if notification.notification_types == 3 %}
       
-                    <div class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
+                    <div class="alert alert-white alert-dismissible fade show {{ notification.bgClass }}" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
                         <div class="side-menu__user-profile">
                             <a href="{% url 'profile' notification.sender.username %}" class="side-menu__user-avatar">
                                 {% if notification.sender.profile.image %}
@@ -100,7 +101,7 @@
 
 
                 {% if notification.notification_types == 2 %}
-                <div  class="alert alert-white alert-dismissible fade show" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
+                <div  class="alert alert-white alert-dismissible fade show {{ notification.bgClass }}" role="alert" style="border: 1px rgba(219, 219, 219, 0.699) solid; border-radius: 25px;">
                   <div class="side-menu__user-profile">
 
                     <a href="{% url 'profile' notification.sender.username %}" class="side-menu__user-avatar">
