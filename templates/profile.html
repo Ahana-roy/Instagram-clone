@@ -51,9 +51,16 @@
                         {% endif %}
                         
                         {% if request.user.is_authenticated and request.user != profile.user %}
+                        
                             {% if follow_status == True %}
-                                <a href="{% url 'follow' profile.user 0 %}" class="btn profile-edit-btn" style="color: red;">Unfollow</a> <br><br>
+                            {% if status_val == 0 %}
+                            <a href="{% url 'follow' profile.user 1 %}" class="btn profile-edit-btn" style="color: orange;">Pending</a> <br><br>
+                        
                             {% else %}
+                            <a href="{% url 'follow' profile.user 0 %}" class="btn profile-edit-btn" style="color: red;">Unfollow</a> <br><br>
+                        
+                            {% endif %}
+                                    {% else %}
                                 <a href="{% url 'follow' profile.user 1 %}" class="btn profile-edit-btn" style="color: green;">Follow</a> <br><br>
                             {% endif %}
                         {% endif %}
@@ -111,7 +118,8 @@
         <div class="container">
 
             <div class="gallery">
-                {% if follow_status %}
+                {% if request.user == profile.user or follow_status == True and status_val != 0 %}
+
                 {% for post in posts %}
                 
                 <a href="{{post.get_absolute_url}}"><div class="gallery-item" tabindex="0">
@@ -130,12 +138,14 @@
                 </div>
             </a>
                
-
-                
+               
                 {% endfor %}
+
                 {% else %}
-                <p> Follow to view posts </p>
-                {% endif %}
+
+               <i class="fas fa-camera" style="font-size:20px; text-align: center;"> Follow to view their posts</i>
+                
+               {% endif %}
                 
 
                 

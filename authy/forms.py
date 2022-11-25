@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 
+# Editing profile details form
+
 
 class EditProfileForm(forms.ModelForm):
 
@@ -21,6 +23,7 @@ class EditProfileForm(forms.ModelForm):
 
 
 
+# Registration form for new users
 
 class UserRegisterForm(UserCreationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username', 'class': 'prompt srch_explore'}), max_length=50, required=True)

@@ -11,6 +11,10 @@ from django.utils import timezone
 from post.models import Post
 
 
+
+# DB DESIGN FOR USER PROFILE --> save and opening the image in a particular format
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     image = models.ImageField(upload_to="profile_pciture", null=True, default="default.jpg")
@@ -38,12 +42,19 @@ class Profile(models.Model):
             img.save(self.image.path)
 
 
+# creating user profile
+            
 def create_user_profile(sender, instance, created, **kwargs):
 	if created:
 		Profile.objects.create(user=instance)
 
+                
+# saving user profile
+                
 def save_user_profile(sender, instance, **kwargs):
 	instance.profile.save()
 
+        
+        
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)

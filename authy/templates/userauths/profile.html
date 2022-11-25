@@ -7,18 +7,23 @@
 <main>
 <!-- =======================
 Page content START -->
+
 <section class="pt-5 pb-0">
 	<div class="container">
 		<div class="row g-0 g-lg-5">
 
 			<!-- Left sidebar START -->
+
 			<div class="col-lg-4">
 				<div class="row">
 					<div class="col-md-6 col-lg-12">
+
 						<!-- Instructor image START -->
+
 						<div class="card shadow p-2 mb-4 text-center">
 							<div class="rounded-3">
 								<!-- Image -->
+
 								{% if not profile.image.url %}
 								<a href="{% url 'userauths:profile-update' %}" class="btn" style="background:linear-gradient(230deg, rgb(255, 0, 157)  0%, rgb(111, 0, 255) 100%), url(assets/img/tag-light.png) no-repeat; color: white;" >Update Profile</a>
 								{% else %}
@@ -28,14 +33,19 @@ Page content START -->
 						</div>
 					</div>
 				</div> 
+
 				<!-- Row End -->
 			</div>
+
+
 			<!-- Left sidebar END -->
 				
 			<!-- Main content START -->
+
 			<div class="col-lg-8">
 			
 				<!-- Title -->
+
                 {% if profile.first_name  %}
 					<h5 class="mb-0">Hi, I am</h5>
                 {% else %}
@@ -43,9 +53,14 @@ Page content START -->
                 {% endif %}
 				<h1 class="mb-0">{{ profile.first_name }} {{ profile.last_name }}</h1>
 				<p>{{ profile.bio }}</p>
+
+
 				<!-- Content -->
+
 				<p class="mt-4">{{ profile.aboutme }}</p>
+				
 				<!-- Personal info -->
+
 				<ul class="list-group list-group-borderless">
 					<li class="list-group-item px-0">
 						<span class="h6 fw-light"><i class="fas fa-fw fa-map-marker-alt text-primary me-1 me-sm-3"></i>Address:</span>

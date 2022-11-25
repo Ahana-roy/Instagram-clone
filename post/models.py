@@ -61,7 +61,7 @@ class Likes(models.Model):
         like = instance
         post = like.post
         sender = like.user
-        notify = Notification(post=post, sender=sender, user=post.user)
+        notify = Notification(post=post, sender=sender, user=post.user, notification_types=1)
         notify.save()
 
     def user_unliked_post(sender, instance, *args, **kwargs):
@@ -75,6 +75,7 @@ class Likes(models.Model):
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+    status = models.SmallIntegerField(null=True)
 
     def user_follow(sender, instance, *args, **kwargs):
         follow = instance
